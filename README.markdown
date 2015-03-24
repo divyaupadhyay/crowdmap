@@ -159,3 +159,7 @@ Installation
 Additional Information
 ----------------------
 For further references and documentation, head over to our wiki (http://wiki.ushahidi.com). Also, we encourage you to drop by our forums (https://wiki.ushahidi.com/display/forums/Ushahidi+Forums) if you have any additional questions or concerns.
+
+Changes
+-------
+Added form fields for Guyana Crowdsourcing Portal (https://github.com/divyaupadhyay/crowdmap/commit/4b4ffc745f4a3bf1891c34bafa6d335e16c61b02)
