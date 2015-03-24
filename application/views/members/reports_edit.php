@@ -77,11 +77,112 @@
 							</div>
 							<!-- JP: Added advanced settings from the form data -->
 							<div class="row">
-								<h4><span id="report_title_name" class="name-text"><?php echo (!empty($form['form_data']->report_title_name) ? $form['form_data']->report_title_name : Kohana::lang('ui_main.reports_title')); ?></span> <span class="required">*</span> </h4>
+								<h4><span id="report_title_name" class="name-text"><?php echo (!empty($form['form_data']->report_title_name) ? $form['form_data']->report_title_name : Kohana::lang('ui_main.name')); ?></span> <span class="required">*</span> </h4>
 								<?php print form::input('incident_title', $form['incident_title'], ' class="text title"'); ?>
 							</div>
+
+								<div class="row">
+								<h4><span id="report_title_name" class="name-text"><?php echo (!empty($form['form_data']->report_title_name) ? $form['form_data']->report_title_name : Kohana::lang('ui_main.age')); ?></span> <span class="required">*</span> </h4>
+								<?php print form::input('incident_title', $form['incident_title'], ' class="text title"'); ?>
+							</div>
+
+							<div class="row link-row">
+								<h4><?php echo Kohana::lang('ui_main.photo_student');?></h4>
+								<?php								
+    								if ($incident != "0")
+                        			{
+                        				// Retrieve Media
+                        				foreach($incident->media as $photo) 
+                        				{
+                        					if ($photo->media_type == 1)
+                        					{
+                        						print "<div class=\"report_thumbs\" id=\"photo_". $photo->id ."\">";
+
+                        						$thumb = $photo->media_thumb;
+                        						$photo_link = $photo->media_link;
+												$prefix = url::base().Kohana::config('upload.relative_directory');
+                        						print "<a class='photothumb' rel='lightbox-group1' href='$prefix/$photo_link'>";
+                        						print "<img src=\"$prefix/$thumb\" >";
+                        						print "</a>";
+
+                        						print "&nbsp;&nbsp;<a href=\"#\" onClick=\"deletePhoto('".$photo->id."', 'photo_".$photo->id."'); return false;\" >".Kohana::lang('ui_main.delete')."</a>";
+                        						print "</div>";
+                        					}
+                        				}
+                        			}
+			                    ?>
+							</div>
+								<div id="divPhoto">
+								<?php
+								$this_div = "divPhoto";
+								$this_field = "incident_photo";
+								$this_startid = "photo_id";
+								$this_field_type = "file";
+					
+								if (empty($form[$this_field]['name'][0]))
+								{
+									$i = 1;
+									print "<div class=\"row link-row\">";
+									print form::upload($this_field . '[]', '', ' class="text long"');
+									print "<a href=\"#\" class=\"add\" onClick=\"addFormField('$this_div','$this_field','$this_startid','$this_field_type'); return false;\">add</a>";
+									print "</div>";
+								}
+								else
+								{
+									$i = 0;
+									foreach ($form[$this_field]['name'] as $value) 
+									{
+										print "<div ";
+										if ($i != 0) {
+											print "class=\"row link-row second\" id=\"" . $this_field . "_" . $i . "\">\n";
+										}
+										else
+										{
+											print "class=\"row link-row\" id=\"$i\">\n";
+										}
+										// print "\"<strong>" . $value . "</strong>\"" . "<BR />";
+										print form::upload($this_field . '[]', $value, ' class="text long"');
+										print "<a href=\"#\" class=\"add\" onClick=\"addFormField('$this_div','$this_field','$this_startid','$this_field_type'); return false;\">add</a>";
+										if ($i != 0)
+										{
+											print "<a href=\"#\" class=\"rem\"  onClick='removeFormField(\"#".$this_field."_".$i."\"); return false;'>remove</a>";
+										}
+										print "</div>\n";
+										$i++;
+									}
+								}
+								print "<input type=\"hidden\" name=\"$this_startid\" value=\"$i\" id=\"$this_startid\">";
+								?>
+							</div>
+
+								<div class="row">
+								<h4><span id="report_title_name" class="name-text"><?php echo (!empty($form['form_data']->report_title_name) ? $form['form_data']->report_title_name : Kohana::lang('ui_main.edu')); ?></span> <span class="required">*</span> </h4>
+								<?php print form::input('incident_title', $form['incident_title'], ' class="text title"'); ?>
+							</div>
+
+								<div class="row">
+								<h4><span id="report_title_name" class="name-text"><?php echo (!empty($form['form_data']->report_title_name) ? $form['form_data']->report_title_name : Kohana::lang('ui_main.previouspcv')); ?></span> <span class="required">*</span> </h4>
+								<?php print form::input('incident_title', $form['incident_title'], ' class="text title"'); ?>
+							</div>
+
+	
 							<div class="row" id="description_row" style="<?php echo 'display: ', ($form['form_data']->description_active) ? 'block' : 'none'; ?>">
-								<h4><span id="description_name" class="name-text"><?php echo (!empty($form['form_data']->description_name) ? $form['form_data']->description_name : Kohana::lang('ui_main.reports_description')); ?></span> <span class="required">*</span> <span><?php echo Kohana::lang('ui_main.include_detail');?>.</span></h4>
+								<h4><span id="description_name" class="name-text"><?php echo (!empty($form['form_data']->description_name) ? $form['form_data']->description_name : Kohana::lang('ui_main.tillnow')); ?></span> <span class="required">*</span> <span><?php echo Kohana::lang('ui_main.include_detail');?>.</span></h4>
+								<span class="allowed-html"><?php echo html::allowed_html(); ?></span>
+								<?php print form::textarea('incident_description', $form['incident_description'], ' rows="12" cols="40"'); ?>
+							</div>
+
+								<div class="row">
+								<h4><span id="report_title_name" class="name-text"><?php echo (!empty($form['form_data']->report_title_name) ? $form['form_data']->report_title_name : Kohana::lang('ui_main.books')); ?></span> <span class="required">*</span> </h4>
+								<?php print form::input('incident_title', $form['incident_title'], ' class="text title"'); ?>
+							</div>
+<div class="row" id="description_row" style="<?php echo 'display: ', ($form['form_data']->description_active) ? 'block' : 'none'; ?>">
+								<h4><span id="description_name" class="name-text"><?php echo (!empty($form['form_data']->description_name) ? $form['form_data']->description_name : Kohana::lang('ui_main.health')); ?></span> <span class="required">*</span> <span><?php echo Kohana::lang('ui_main.include_detail');?>.</span></h4>
+								<span class="allowed-html"><?php echo html::allowed_html(); ?></span>
+								<?php print form::textarea('incident_description', $form['incident_description'], ' rows="12" cols="40"'); ?>
+							</div>
+							<div class="row" id="description_row" style="<?php echo 'display: ', ($form['form_data']->description_active) ? 'block' : 'none'; ?>">
+								<h4><span id="description_name" class="name-text"><?php echo (!empty($form['form_data']->description_name) ? $form['form_data']->description_name : Kohana::lang('ui_main.additional')); ?></span> <span class="required">*</span> <span><?php echo Kohana::lang('ui_main.include_detail');?>.</span></h4>
 								<span class="allowed-html"><?php echo html::allowed_html(); ?></span>
 								<?php print form::textarea('incident_description', $form['incident_description'], ' rows="12" cols="40"'); ?>
 							</div>
@@ -148,7 +249,7 @@
 						<!-- f-col-1 -->
 						<div class="f-col-1">
 							<div class="incident-location">
-								<h4><?php echo Kohana::lang('ui_main.incident_location');?></h4>
+								<h4><?php echo Kohana::lang('ui_main.location');?></h4>
 								<div class="location-info">
 									<span><?php echo Kohana::lang('ui_main.latitude');?>:</span>
 									<?php print form::input('latitude', $form['latitude'], ' class="text"'); ?>
@@ -271,49 +372,7 @@
 
 
 							<!-- Video Fields -->
-							<div class="row link-row">
-								<h4><?php echo Kohana::lang('ui_main.reports_video');?></h4>
-							</div>
-							<div id="divVideo">
-								<?php
-								$this_div = "divVideo";
-								$this_field = "incident_video";
-								$this_startid = "video_id";
-								$this_field_type = "text";
 					
-								if (empty($form[$this_field]))
-								{
-									$i = 1;
-									print "<div class=\"row link-row\">";
-									print form::input($this_field . '[]', '', ' class="text long"');
-									print "<a href=\"#\" class=\"add\" onClick=\"addFormField('$this_div','$this_field','$this_startid','$this_field_type'); return false;\">add</a>";
-									print "</div>";
-								}
-								else
-								{
-									$i = 0;
-									foreach ($form[$this_field] as $value) {									
-										print "<div ";
-										if ($i != 0) {
-											print "class=\"row link-row second\" id=\"" . $this_field . "_" . $i . "\">\n";
-										}
-										else
-										{
-											print "class=\"row link-row\" id=\"$i\">\n";
-										}
-										print form::input($this_field . '[]', $value, ' class="text long"');
-										print "<a href=\"#\" class=\"add\" onClick=\"addFormField('$this_div','$this_field','$this_startid','$this_field_type'); return false;\">add</a>";
-										if ($i != 0)
-										{
-											print "<a href=\"#\" class=\"rem\"  onClick='removeFormField(\"#" . $this_field . "_" . $i . "\"); return false;'>remove</a>";
-										}
-										print "</div>\n";
-										$i++;
-									}
-								}
-								print "<input type=\"hidden\" name=\"$this_startid\" value=\"$i\" id=\"$this_startid\">";
-								?>
-							</div>
 				
 				
 							<!-- Photo Fields -->
